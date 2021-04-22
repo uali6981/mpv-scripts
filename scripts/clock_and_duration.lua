@@ -11,7 +11,7 @@ local assdraw = require('mp.assdraw')
 
 local shown = false
 
-local update_timeout = 5 -- in seconds
+local update_timeout = 1 -- in seconds
 
 -- Class creation function
 function class_new(klass)
@@ -36,7 +36,7 @@ local OSDClockAndDuration = class_new()
 function OSDClockAndDuration:_show_clock_and_duration()
     local osd_w, osd_h, aspect = mp.get_osd_size()
 
-    local fontsize = 10
+    local fontsize = 13
 
     -- For showing Duration on upper left corner
     local duration = mp.get_property_osd("playback-time") .. " / " .. mp.get_property_osd("duration")
