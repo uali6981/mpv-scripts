@@ -38,7 +38,7 @@ function OSDClockAndTitleAndDuration:_show_clock_and_title_and_duration()
 
     local fontsize = 13
 
-    -- For showing Duration on upper left corner
+    -- For showing Duration on top left corner
     local duration = mp.get_property_osd("playback-time") .. " / " .. mp.get_property_osd("duration")
     local ass = assdraw:ass_new()
     ass:new_event()
@@ -48,15 +48,16 @@ function OSDClockAndTitleAndDuration:_show_clock_and_title_and_duration()
     ass:an(0)
     mp.set_osd_ass(osd_w, osd_h, ass.text)
 
-    local duration = mp.get_property_osd("media-title")
+    -- For showing Title on top center
+    local title = mp.get_property_osd("media-title")
     ass:new_event()
     ass:an(8)
     ass:append(string.format("{\\fs%d}", fontsize))
-    ass:append(duration)
+    ass:append(title)
     ass:an(0)
     mp.set_osd_ass(osd_w, osd_h, ass.text)
 
-    -- For showing Clock on upper right corner
+    -- For showing Clock on top right corner
     local now = os.date("%I:%M %p")
     ass:new_event()
     ass:an(9)
