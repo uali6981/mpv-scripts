@@ -2167,10 +2167,7 @@ do
         return function(...)
           return _fn_0(_base_1, ...)
         end
-      end)(), (function() end)()))
-      return self.eventLoop:addUIElement(self)
-      
-      AnimationQueue.addAnimation(Animation(0, 1, settings['animation-duration'], (function() end)(), (function()
+      end)(), (function()
         local _base_1 = self
         local _fn_0 = _base_1.destroy
         return function(...)
