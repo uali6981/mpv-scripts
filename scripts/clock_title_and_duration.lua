@@ -32,8 +32,8 @@ function print_table(tbl)
 end
 
 -- Show OSD Clock And Duration
-local OSDClockAndDuration = class_new()
-function OSDClockAndDuration:_show_clock_and_duration()
+local OSDClockAndTitleAndDuration = class_new()
+function OSDClockAndTitleAndDuration:_show_clock_and_title_and_duration()
     local osd_w, osd_h, aspect = mp.get_osd_size()
 
     local fontsize = 13
@@ -43,6 +43,14 @@ function OSDClockAndDuration:_show_clock_and_duration()
     local ass = assdraw:ass_new()
     ass:new_event()
     ass:an(7)
+    ass:append(string.format("{\\fs%d}", fontsize))
+    ass:append(duration)
+    ass:an(0)
+    mp.set_osd_ass(osd_w, osd_h, ass.text)
+
+    local duration = mp.get_property_osd("media-title")
+    ass:new_event()
+    ass:an(8)
     ass:append(string.format("{\\fs%d}", fontsize))
     ass:append(duration)
     ass:an(0)
@@ -63,7 +71,7 @@ function clear_osd()
     mp.set_osd_ass(osd_w, osd_h, "")
 end
 
-function OSDClockAndDuration:toggle_show_clock_and_duration(val)
+function OSDClockAndTitleAndDuration:toggle_show_clock_and_title_and_duration(val)
     if shown == true then
         self.tobj:kill()
         self.tobj = nil
@@ -79,22 +87,22 @@ function OSDClockAndDuration:toggle_show_clock_and_duration(val)
                 shown = false
             end
         elseif val == nil or trues[val] == true then
-            self:_show_clock_and_duration()
+            self:_show_clock_and_title_and_duration()
             local tobj = mp.add_periodic_timer(update_timeout,
-                function() self:_show_clock_and_duration() end)
+                function() self:_show_clock_and_title_and_duration() end)
             self.tobj = tobj
             shown = true
         end
     end
 end
 
-local osd_clock_and_duration = OSDClockAndDuration:new()
-function toggle_show_clock_and_duration(v)
-    osd_clock_and_duration:toggle_show_clock_and_duration(v)
+local osd_clock_and_duration = OSDClockAndTitleAndDuration:new()
+function toggle_show_clock_and_title_and_duration(v)
+    osd_clock_and_duration:toggle_show_clock_and_title_and_duration(v)
 end
 
-mp.commandv("script-message", toggle_show_clock_and_duration())
-mp.register_script_message("show-clock-and-duration", toggle_show_clock_and_duration)
+mp.commandv("script-message", toggle_show_clock_and_title_and_duration())
+mp.register_script_message("show-clock-and-title-and-duration", toggle_show_clock_and_title_and_duration)
 
 
 
